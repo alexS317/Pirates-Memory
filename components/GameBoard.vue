@@ -1,0 +1,28 @@
+<script setup>
+import { ref } from "vue";
+import Card from "@/components/Card.vue";
+
+let cardList = [];
+
+for (let i = 0; i < 16; i++) {
+  cardList.push({ position: i });
+}
+</script>
+
+<template>
+  <div class="game-board">
+    <Card v-for="card in cardList" :position="card.position" />
+  </div>
+</template>
+
+<style>
+.game-board {
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 30px;
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(4, 150px);
+  grid-template-rows: repeat(4, 150px);
+  padding: 30px;
+}
+</style>
