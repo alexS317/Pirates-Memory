@@ -1,7 +1,7 @@
 <script setup>
 const props = defineProps({
   position: Number,
-  faceValue: Number,
+  faceValue: String,
   visible: {
     type: Boolean,
     default: false,
@@ -32,9 +32,9 @@ function selectCard() {
 <template>
   <div class="card" :class="flipped" @click="selectCard">
     <div v-if="visible" class="card-face front">
-      {{ position }}, {{ faceValue }}, {{ visible }}, {{ matched }}
+      <img :src="`/images/${faceValue}.png`" :alt="faceValue">
     </div>
-    <div v-else class="card-face back">Back</div>
+    <div v-else class="card-face back"></div>
   </div>
 </template>
 
@@ -45,9 +45,12 @@ function selectCard() {
   border-radius: 20px;
   position: relative;
 }
+.card:hover {
+  cursor: pointer;
+}
 
 .card-face {
-  border-radius: 20px;
+  border-radius: inherit;
   height: 100%;
   position: absolute;
   width: 100%;
@@ -55,6 +58,12 @@ function selectCard() {
 
 .card-face.front {
   background-color: red;
+}
+
+.card-face.front img {
+  border-radius: inherit;
+  height: inherit;
+  width: inherit;
 }
 
 .card-face.back {

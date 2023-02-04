@@ -1,22 +1,38 @@
 <script setup>
-// import { ref } from "vue";
 import Card from "@/components/Card.vue";
 
 const cardList = ref([]);
-const cardItems = [1, 2, 3, 4, 5, 6, 7, 8];
+const cardItems = [
+  "barbossa",
+  "beckett",
+  "calypso",
+  "davy",
+  "elizabeth",
+  "jack",
+  "norrington",
+  "will",
+];
 const playerSelection = ref([]);
+let attempts = 0;
 
-// Create 16 cards on the board
-// for (let i = 0; i < 16; i++) {
-//   cardList.value.push({ faceValue: 8, visible: false });
-// }
-
+// Create 2x8 cards on the board, so there are always 2 cards with the same faceValue
 cardItems.forEach((item) => {
-  cardList.value.push({ faceValue: item, variant: 1, visible: false });
+  cardList.value.push({
+    position: null,
+    faceValue: item,
+    variant: 1,
+    visible: false,
+    matched: false,
+  });
 });
-
 cardItems.forEach((item) => {
-  cardList.value.push({ faceValue: item, variant: 2, visible: false });
+  cardList.value.push({
+    position: null,
+    faceValue: item,
+    variant: 2,
+    visible: false,
+    matched: false,
+  });
 });
 
 // Reorder cardList array to a random order
@@ -29,15 +45,13 @@ function shuffleCards() {
   cardList.value.forEach((card, index) => {
     card.position = index;
   });
-  
+
   return cardList.value;
 }
 shuffleCards();
 
-// Flip the card that sent an emit (= was clicked) to the front
+// Flip the card that sent an emit (= was clicked) to be visible
 function flipCard(emitData) {
-  // console.log(emitData.faceValue);
-  // console.log(emitData.selectedFaceValue);
   cardList.value[emitData.position].visible = true;
 
   // If playerSelection array is empty, put clicked card's emitData in position 0
@@ -48,12 +62,9 @@ function flipCard(emitData) {
       playerSelection.value[0].position === emitData.position &&
       playerSelection.value[0].selectedFaceValue === emitData.selectedFaceValue
     ) {
-      // console.log(playerSelection.value[0].selectedFaceValue, emitData.selectedFaceValue);
       return;
     } else playerSelection.value[1] = emitData;
   } else playerSelection.value[0] = emitData;
-
-  // console.log(playerSelection.value);
 }
 
 // Check if the 2 cards selected by the player match
@@ -63,9 +74,8 @@ watch(
     if (currentValue.length === 2) {
       const cardOne = currentValue[0];
       const cardTwo = currentValue[1];
-      console.log("Full!"); // Note: I just have to count how often currentValue is full to get the attempts
-      // console.log(cardOne.selectedFaceValue);
-      // console.log(cardTwo.selectedFaceValue);
+
+      attempts++;
 
       // Set cards to matched if they have the same faceValue
       // Else flip them back after 1.5s so the front is not visible
@@ -85,12 +95,37 @@ watch(
   },
   { deep: true }
 );
+
+// Count the remaining unmatched pairs
+const remainingPairs = computed(() => {
+  // Check how many cards still have their matched property set to false
+  const remainingCards = cardList.value.filter(
+    (card) => card.matched === false
+  ).length;
+
+  return remainingCards / 2;
+});
+
+// Display the remaining pairs, display win message if the player has matched all pairs
+const status = computed(() => {
+  if (remainingPairs.value === 0) return "You won!";
+  else return `Remaining Pairs: ${remainingPairs.value}`;
+});
+
+// Reshuffle and hide the cards and clear previous matches to restart
+function restartGame() {
+  shuffleCards();
+  cardList.value.forEach((card) => {
+    (card.visible = false), (card.matched = false);
+  });
+}
 </script>
 
 <template>
   <div class="game-board">
     <Card
       v-for="card in cardList"
+      :key="`${card.faceValue}-${card.variant}`"
       :position="card.position"
       :face-value="card.faceValue"
       :visible="card.visible"
@@ -98,6 +133,9 @@ watch(
       @select-card="flipCard"
     />
   </div>
+  <h2>{{ status }}</h2>
+  <h2>Attempts: {{ attempts }}</h2>
+  <button @click="restartGame">Restart Game</button>
 </template>
 
 <style>
