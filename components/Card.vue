@@ -21,16 +21,16 @@ const flipped = computed(() => {
 
 // Card emits its position and value when being clicked
 function selectCard() {
-  emit("select-card", {
+  emits("select-card", {
     position: props.position,
     selectedFaceValue: props.faceValue,
-    visible: props.visible
+    visible: props.visible,
   });
 }
 </script>
 
 <template>
-  <div class="card" @click="selectCard">
+  <div class="card" :class="flipped" @click="selectCard">
     <div v-if="visible" class="card-face front">
       {{ position }}, {{ faceValue }}, {{ visible }}, {{ matched }}
     </div>
@@ -41,6 +41,7 @@ function selectCard() {
 <style>
 .card {
   background-color: goldenrod;
+  border: 3px solid goldenrod;
   border-radius: 20px;
   position: relative;
 }
@@ -57,6 +58,7 @@ function selectCard() {
 }
 
 .card-face.back {
-  background-color: blue;
+  background-image: url(/images/back.jpg);
+  background-size: cover;
 }
 </style>
