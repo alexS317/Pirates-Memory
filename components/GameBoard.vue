@@ -1,17 +1,51 @@
 <script setup>
-import { ref } from "vue";
+// import { ref } from "vue";
 import Card from "@/components/Card.vue";
 
-let cardList = [];
+const cardList = ref([]);
+const playerSelection = ref([]);
 
+// Create 16 cards on the board
 for (let i = 0; i < 16; i++) {
-  cardList.push({ position: i });
+  cardList.value.push({ faceValue: 8, visible: false });
+}
+
+// Get the position for each card from its index
+cardList.value.forEach((card, index) => {
+  card.position = index;
+});
+
+// Flip the card that sent an emit (= was clicked) to the front
+function flipCard(emitData) {
+  console.log(emitData);
+  cardList.value[emitData.position].visible = true;
+
+  // If playerSelection array is empty, put clicked card's emitData in position 0
+  // If not, put it in position 1 -> playerSelection never contains more than 2 elements
+  if (playerSelection.value[0]) {
+    // Cannot select same card twice
+    if (
+      playerSelection.value[0].position === emitData.position &&
+      playerSelection.value[0].faceValue === emitData.faceValue
+    ) {
+      return;
+    } else playerSelection.value[1] = emitData;
+  } else playerSelection.value[0] = emitData;
+
+  console.log(playerSelection.value);
 }
 </script>
 
 <template>
   <div class="game-board">
-    <Card v-for="card in cardList" :position="card.position" />
+    <Card
+      v-for="card in cardList"
+      :position="card.position"
+      :face-value="card.faceValue"
+      :visible="card.visible"
+      :matched="card.matched"
+      @select-card="flipCard"
+    />
   </div>
 </template>
 

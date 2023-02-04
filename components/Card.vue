@@ -11,12 +11,30 @@ const props = defineProps({
     default: false,
   },
 });
+
+const emits = defineEmits(["select-card"]);
+
+// Checked whether card is flipped (front is visible) or not
+const flipped = computed(() => {
+  if (props.visible) return "flipped-front";
+});
+
+// Card emits its position and value when being clicked
+function selectCard() {
+  emit("select-card", {
+    position: props.position,
+    selectedFaceValue: props.faceValue,
+    visible: props.visible
+  });
+}
 </script>
 
 <template>
-  <div class="card">
-    <div class="card-face front">{{ position }}</div>
-    <div class="card-face back"></div>
+  <div class="card" @click="selectCard">
+    <div v-if="visible" class="card-face front">
+      {{ position }}, {{ faceValue }}, {{ visible }}, {{ matched }}
+    </div>
+    <div v-else class="card-face back">Back</div>
   </div>
 </template>
 
