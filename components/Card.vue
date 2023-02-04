@@ -32,7 +32,7 @@ function selectCard() {
 <template>
   <div class="card" :class="flipped" @click="selectCard">
     <div v-if="visible" class="card-face front">
-      <img :src="`/images/${faceValue}.png`" :alt="faceValue">
+      <img :src="`/images/${faceValue}.png`" :alt="faceValue" />
     </div>
     <div v-else class="card-face back"></div>
   </div>

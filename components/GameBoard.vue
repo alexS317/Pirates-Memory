@@ -1,141 +1,28 @@
 <script setup>
 import Card from "@/components/Card.vue";
 
-const cardList = ref([]);
-const cardItems = [
-  "barbossa",
-  "beckett",
-  "calypso",
-  "davy",
-  "elizabeth",
-  "jack",
-  "norrington",
-  "will",
-];
-const playerSelection = ref([]);
-let attempts = 0;
+const store = useGameStore();
 
-// Create 2x8 cards on the board, so there are always 2 cards with the same faceValue
-cardItems.forEach((item) => {
-  cardList.value.push({
-    position: null,
-    faceValue: item,
-    variant: 1,
-    visible: false,
-    matched: false,
-  });
+onBeforeMount(() => {
+  store.initGame();
 });
-cardItems.forEach((item) => {
-  cardList.value.push({
-    position: null,
-    faceValue: item,
-    variant: 2,
-    visible: false,
-    matched: false,
-  });
-});
-
-// Reorder cardList array to a random order
-function shuffleCards() {
-  cardList.value.sort(() => {
-    return 0.5 - Math.random();
-  });
-
-  // Get the position for each card from its index
-  cardList.value.forEach((card, index) => {
-    card.position = index;
-  });
-
-  return cardList.value;
-}
-shuffleCards();
-
-// Flip the card that sent an emit (= was clicked) to be visible
-function flipCard(emitData) {
-  cardList.value[emitData.position].visible = true;
-
-  // If playerSelection array is empty, put clicked card's emitData in position 0
-  // If not, put it in position 1 -> playerSelection never contains more than 2 elements
-  if (playerSelection.value[0]) {
-    // Cannot select same card twice
-    if (
-      playerSelection.value[0].position === emitData.position &&
-      playerSelection.value[0].selectedFaceValue === emitData.selectedFaceValue
-    ) {
-      return;
-    } else playerSelection.value[1] = emitData;
-  } else playerSelection.value[0] = emitData;
-}
-
-// Check if the 2 cards selected by the player match
-watch(
-  playerSelection,
-  (currentValue) => {
-    if (currentValue.length === 2) {
-      const cardOne = currentValue[0];
-      const cardTwo = currentValue[1];
-
-      attempts++;
-
-      // Set cards to matched if they have the same faceValue
-      // Else flip them back after 1.5s so the front is not visible
-      if (cardOne.selectedFaceValue === cardTwo.selectedFaceValue) {
-        cardList.value[cardOne.position].matched = true;
-        cardList.value[cardTwo.position].matched = true;
-      } else {
-        setTimeout(() => {
-          cardList.value[cardOne.position].visible = false;
-          cardList.value[cardTwo.position].visible = false;
-        }, 1500);
-      }
-
-      // Clear the playerSelection
-      playerSelection.value.length = 0;
-    }
-  },
-  { deep: true }
-);
-
-// Count the remaining unmatched pairs
-const remainingPairs = computed(() => {
-  // Check how many cards still have their matched property set to false
-  const remainingCards = cardList.value.filter(
-    (card) => card.matched === false
-  ).length;
-
-  return remainingCards / 2;
-});
-
-// Display the remaining pairs, display win message if the player has matched all pairs
-const status = computed(() => {
-  if (remainingPairs.value === 0) return "You won!";
-  else return `Remaining Pairs: ${remainingPairs.value}`;
-});
-
-// Reshuffle and hide the cards and clear previous matches to restart
-function restartGame() {
-  shuffleCards();
-  cardList.value.forEach((card) => {
-    (card.visible = false), (card.matched = false);
-  });
-}
 </script>
 
 <template>
   <div class="game-board">
     <Card
-      v-for="card in cardList"
+      v-for="card in store.cardList"
       :key="`${card.faceValue}-${card.variant}`"
       :position="card.position"
       :face-value="card.faceValue"
       :visible="card.visible"
       :matched="card.matched"
-      @select-card="flipCard"
+      @select-card="store.flipCard"
     />
   </div>
-  <h2>{{ status }}</h2>
-  <h2>Attempts: {{ attempts }}</h2>
-  <button @click="restartGame">Restart Game</button>
+  <h2>{{ store.gameStatus }}</h2>
+  <h2>Attempts: {{ store.attempts }}</h2>
+  <button @click="store.restartGame">Restart Game</button>
 </template>
 
 <style>
