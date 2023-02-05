@@ -1,17 +1,10 @@
 import { defineStore } from "pinia";
+import { createGame } from "@/scripts/createBoard";
+import pirateCards from "@/data/pirateCards.json";
 
 export const useGameStore = defineStore("GameStore", () => {
   const cardList = ref([]);
-  const cardItems = [
-    "barbossa",
-    "beckett",
-    "calypso",
-    "davy",
-    "elizabeth",
-    "jack",
-    "norrington",
-    "will",
-  ];
+  const cardItems = pirateCards;
   const playerSelection = ref([]);
   let attempts = ref(0);
 

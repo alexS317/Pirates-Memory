@@ -1,10 +1,15 @@
 <script setup>
 import GameBoard from "@/components/GameBoard.vue";
+
+const store = useGameStore();
 </script>
 
 <template>
   <h1>Memory Game</h1>
   <GameBoard />
+  <h2>{{ store.gameStatus }}</h2>
+  <h2>Attempts: {{ store.attempts }}</h2>
+  <button @click="store.restartGame">Restart Game</button>
 </template>
 
 <style>

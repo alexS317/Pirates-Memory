@@ -2,22 +2,11 @@
 const props = defineProps({
   position: Number,
   faceValue: String,
-  visible: {
-    type: Boolean,
-    default: false,
-  },
-  matched: {
-    type: Boolean,
-    default: false,
-  },
+  visible: Boolean,
+  matched: Boolean,
 });
 
 const emits = defineEmits(["select-card"]);
-
-// Checked whether card is flipped (front is visible) or not
-const flipped = computed(() => {
-  if (props.visible) return "flipped-front";
-});
 
 // Card emits its position and value when being clicked
 function selectCard() {
@@ -27,14 +16,19 @@ function selectCard() {
     visible: props.visible,
   });
 }
+
+// Checked whether card is flipped (front is visible) or not
+const flipped = computed(() => {
+  if (props.visible) return "flipped-front";
+});
 </script>
 
 <template>
   <div class="card" :class="flipped" @click="selectCard">
-    <div v-if="visible" class="card-face front">
+    <div class="card-face front">
       <img :src="`/images/${faceValue}.png`" :alt="faceValue" />
     </div>
-    <div v-else class="card-face back"></div>
+    <div class="card-face back"></div>
   </div>
 </template>
 
@@ -44,9 +38,14 @@ function selectCard() {
   border: 3px solid goldenrod;
   border-radius: 20px;
   position: relative;
+  transition: 0.5s transform ease-in;
+  transform-style: preserve-3d;
 }
 .card:hover {
   cursor: pointer;
+}
+.card.flipped-front {
+  transform: rotateY(180deg);
 }
 
 .card-face {
@@ -54,10 +53,11 @@ function selectCard() {
   height: 100%;
   position: absolute;
   width: 100%;
+  backface-visibility: hidden;
 }
 
 .card-face.front {
-  background-color: red;
+  transform: rotateY(180deg);
 }
 
 .card-face.front img {

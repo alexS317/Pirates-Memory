@@ -9,7 +9,7 @@ onBeforeMount(() => {
 </script>
 
 <template>
-  <div class="game-board">
+  <TransitionGroup tag="div" class="game-board" name="shuffle-board">
     <Card
       v-for="card in store.cardList"
       :key="`${card.faceValue}-${card.variant}`"
@@ -19,10 +19,7 @@ onBeforeMount(() => {
       :matched="card.matched"
       @select-card="store.flipCard"
     />
-  </div>
-  <h2>{{ store.gameStatus }}</h2>
-  <h2>Attempts: {{ store.attempts }}</h2>
-  <button @click="store.restartGame">Restart Game</button>
+  </TransitionGroup>
 </template>
 
 <style>
@@ -34,5 +31,9 @@ onBeforeMount(() => {
   grid-template-columns: repeat(4, 150px);
   grid-template-rows: repeat(4, 150px);
   padding: 30px;
+}
+
+.shuffle-board-move {
+  transition: transform 0.8s ease-in;
 }
 </style>
