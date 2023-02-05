@@ -24,11 +24,11 @@ onBeforeMount(() => {
 
 <style>
 .game-board {
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.7);
   border-radius: 30px;
   display: grid;
   gap: 20px;
-  grid-template-columns: repeat(4, 150px);
+  grid-template-columns: repeat(6, 150px);
   grid-template-rows: repeat(4, 150px);
   padding: 30px;
 }

@@ -34,8 +34,8 @@ const flipped = computed(() => {
 
 <style>
 .card {
-  background-color: goldenrod;
-  border: 3px solid goldenrod;
+  background-color: rgb(194, 141, 35);
+  border: 3px solid rgb(194, 141, 35);
   border-radius: 20px;
   position: relative;
   transition: 0.5s transform ease-in;

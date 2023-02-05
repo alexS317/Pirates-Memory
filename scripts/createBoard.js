@@ -1,9 +1,9 @@
-const cardList = ref([]);
+const list = ref([]);
 let attempts = ref(0);
 
-function initGame(cardItems) {
+function initBoard(list, cardItems) {
   cardItems.forEach((item) => {
-    cardList.value.push({
+    list.value.push({
       position: null,
       faceValue: item,
       variant: 1,
@@ -12,7 +12,7 @@ function initGame(cardItems) {
     });
   });
   cardItems.forEach((item) => {
-    cardList.value.push({
+    list.value.push({
       position: null,
       faceValue: item,
       variant: 2,
@@ -20,39 +20,39 @@ function initGame(cardItems) {
       matched: false,
     });
   });
-};
+}
 
 // Reorder cardList array to a random order
 function shuffleCards() {
-  cardList.value.sort(() => {
+  list.value.sort(() => {
     return 0.5 - Math.random();
   });
 
-  return cardList.value;
+  return list.value;
 }
 
 // Get the position for each card from its index
 function getCardIndex() {
-  cardList.value.forEach((card, index) => {
+  list.value.forEach((card, index) => {
     card.position = index;
   });
 }
 
-function createGame(cardItems) {
-  initGame(cardItems);
+function create(list, cardItems) {
+  initBoard(list, cardItems);
   shuffleCards();
   getCardIndex();
 
-  return cardList;
+  return list.value;
 }
 
-function restartGame(cardList) {
+function restart(list) {
   shuffleCards();
   getCardIndex();
 
-  cardList.value.forEach((card) => {
+  list.value.forEach((card) => {
     (card.visible = false), (card.matched = false), (attempts.value = 0);
   });
 }
 
-export { createGame };
+export { create, restart };
