@@ -14,6 +14,7 @@ function selectCard() {
     position: props.position,
     selectedFaceValue: props.faceValue,
     visible: props.visible,
+    matched: props.matched,
   });
 }
 

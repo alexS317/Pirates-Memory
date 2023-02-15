@@ -60,18 +60,22 @@ export const useGameStore = defineStore("GameStore", () => {
   function flipCard(emitData) {
     cardList.value[emitData.position].visible = true;
 
-    // If playerSelection array is empty, put clicked card's emitData in position 0
-    // If not, put it in position 1 -> playerSelection never contains more than 2 elements
-    if (playerSelection.value[0]) {
-      // Prevent player from selecting the same card twice
-      if (
-        playerSelection.value[0].position === emitData.position &&
-        playerSelection.value[0].selectedFaceValue ===
-          emitData.selectedFaceValue
-      ) {
-        return;
-      } else playerSelection.value[1] = emitData;
-    } else playerSelection.value[0] = emitData;
+    // Don't add the card to the playerSelection if it's already been matched
+    if (emitData.matched === true) return;
+    else {
+      // If playerSelection array is empty, put clicked card's emitData in position 0
+      // If not, put it in position 1 -> playerSelection never contains more than 2 elements
+      if (playerSelection.value[0]) {
+        // Prevent player from selecting the same card twice
+        if (
+          playerSelection.value[0].position === emitData.position &&
+          playerSelection.value[0].selectedFaceValue ===
+            emitData.selectedFaceValue
+        ) {
+          return;
+        } else playerSelection.value[1] = emitData;
+      } else playerSelection.value[0] = emitData;
+    }
   }
 
   // Check if the 2 cards selected by the player match
