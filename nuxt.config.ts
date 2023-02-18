@@ -4,4 +4,9 @@ export default defineNuxtConfig({
   imports: {
     dirs: ["stores"],
   },
+  app: {
+    head: {
+      title: "Pirates Memory",
+    },
+  },
 });

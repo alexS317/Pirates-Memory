@@ -56,7 +56,7 @@ const flipped = computed(() => {
   width: 100%;
   backface-visibility: hidden;
 }
-
+  
 .card-face.front {
   transform: rotateY(180deg);
 }
