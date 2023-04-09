@@ -1,5 +1,5 @@
 # ATJS Final Project
 
-For the final project I decided to make a simple memory game, themed after one of my favourite movie franchises, "Pirates of the Caribbean".
+This was my final project for my 3rd semester university course "Advanced Topics of JavaScript". The task was to create a simple game (e.g. Memory, TicTacToe, ...) by using the technoligies we got to know throughout the course: Vue, Pinia, and Nuxt.
 
-I also tried using all main technologies we learned about during the class (Vue, Pinia, Nuxt).
+I decided to create a simple memory game, themed after one of my favourite movie franchises, "Pirates of the Caribbean", while making sure to fulfill all requirements.
