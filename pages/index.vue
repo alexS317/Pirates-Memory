@@ -6,7 +6,7 @@ const store = useGameStore();
 
 <template>
   <h1>Pirates of the Caribbean</h1>
-  <h2>Memory Game made by Alexandra Fontner</h2>
+  <h2>Memory Game made by Alexandra F</h2>
 
   <GameBoard />
 
