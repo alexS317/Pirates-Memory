@@ -10,9 +10,13 @@ const store = useGameStore();
 
   <GameBoard />
 
-  <h3>Attempts: {{ store.attempts }}</h3>
-  <h3>{{ store.gameStatus }}</h3>
-  <button @click="store.restartGame">Restart Game</button>
+  <div id="footer">
+    <div id="info">
+      <h3>Attempts: {{ store.attempts }}</h3>
+      <h3>{{ store.gameStatus }}</h3>
+    </div>
+    <button @click="store.restartGame">Restart Game</button>
+  </div>
 </template>
 
 <style>
@@ -24,31 +28,36 @@ const store = useGameStore();
   color: rgb(194, 141, 35);
   display: flex;
   font-family: "Pieces of Eight", Georgia, "Times New Roman", Times, serif;
-  font-size: 26px;
+  font-size: 1.6rem;
   font-weight: 400;
   justify-content: center;
   letter-spacing: 2;
-  line-height: 0.5;
+  line-height: 0.2;
   text-align: center;
-  text-shadow: 5px 2px 5px black;
+  text-shadow: 0.5vh 0.2vh 0.5vh black;
 }
 
 button {
   background-color: rgb(194, 141, 35);
-  border-radius: 10px;
+  border-radius: 1.2vh;
   border: none;
-  box-shadow: 0 3px goldenrod inset, 0 3px 5px black;
+  box-shadow: 0 0.3vh goldenrod inset, 0 0.3vh 0.5vh black;
   font-family: "Pieces of Eight", Georgia, "Times New Roman", Times, serif;
-  font-size: 24px;
+  font-size: 1rem;
   font-weight: 500;
-  padding: 15px;
+  padding: 1%;
 }
 
 button:hover {
-  box-shadow: 0 3px goldenrod inset, 0 5px 5px black;
   cursor: pointer;
-  transform: translateY(1px);
+  transform: translateY(2%);
   transition: transform 0.1s ease-out;
+}
+
+#footer {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
 
 @font-face {
