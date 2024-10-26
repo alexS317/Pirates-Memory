@@ -8,13 +8,13 @@
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
-    "nuxt": "^3.9.0"
+    "nuxt": "^3.13.2"
   },
   "overrides": {
     "vue": "latest"
   },
   "dependencies": {
-    "@pinia/nuxt": "^0.4.6",
-    "pinia": "^2.1.7"
+    "@pinia/nuxt": "^0.4.11",
+    "pinia": "^2.2.4"
   }
 }
