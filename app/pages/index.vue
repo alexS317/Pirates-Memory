@@ -1,6 +1,4 @@
 <script setup>
-import GameBoard from "@/components/GameBoard.vue";
-
 const store = useGameStore();
 </script>
 
@@ -20,6 +18,8 @@ const store = useGameStore();
 </template>
 
 <style>
+@import url('https://fonts.cdnfonts.com/css/pieces-of-eight');
+
 :root {
   background-blend-mode: multiply;
   background-color: rgb(62, 47, 32);
@@ -41,7 +41,9 @@ button {
   background-color: rgb(194, 141, 35);
   border-radius: 1.2vh;
   border: none;
-  box-shadow: 0 0.3vh goldenrod inset, 0 0.3vh 0.5vh black;
+  box-shadow:
+    0 0.3vh goldenrod inset,
+    0 0.3vh 0.5vh black;
   font-family: "Pieces of Eight", Georgia, "Times New Roman", Times, serif;
   font-size: 1rem;
   font-weight: 500;
@@ -58,10 +60,5 @@ button:hover {
   display: flex;
   justify-content: space-around;
   align-items: center;
-}
-
-@font-face {
-  font-family: "Pieces of Eight";
-  src: url(https://www.dafont.com/pieces-of-eight.ttf);
 }
 </style>

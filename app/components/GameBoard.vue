@@ -1,6 +1,4 @@
 <script setup>
-import Card from "@/components/Card.vue";
-
 const store = useGameStore();
 
 onBeforeMount(() => {
