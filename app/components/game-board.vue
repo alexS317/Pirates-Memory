@@ -7,30 +7,25 @@ onBeforeMount(() => {
 </script>
 
 <template>
-  <TransitionGroup tag="div" class="game-board" name="shuffle-board">
-    <Card
+  <TransitionGroup
+    tag="div"
+    class="grid grid-cols-4 gap-2 rounded-4xl bg-black/70 p-1 md:grid-cols-6 md:gap-5 md:p-8"
+    name="shuffle-board"
+  >
+    <GameCard
       v-for="card in store.cardList"
       :key="`${card.faceValue}-${card.variant}`"
       :position="card.position"
       :face-value="card.faceValue"
       :visible="card.visible"
       :matched="card.matched"
+      class="aspect-square w-20 sm:w-30 xl:w-35"
       @select-card="store.flipCard"
     />
   </TransitionGroup>
 </template>
 
 <style>
-.game-board {
-  background-color: rgba(0, 0, 0, 0.7);
-  border-radius: 30px;
-  display: grid;
-  gap: 20px;
-  grid-template-columns: repeat(6, 150px);
-  grid-template-rows: repeat(4, 150px);
-  padding: 30px;
-}
-
 .shuffle-board-move {
   transition: transform 0.8s ease-in;
 }

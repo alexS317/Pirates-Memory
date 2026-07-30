@@ -3,62 +3,27 @@ const store = useGameStore();
 </script>
 
 <template>
-  <h1>Pirates of the Caribbean</h1>
-  <h2>Memory Game made by Alexandra F</h2>
+  <main
+    class="text-gold m-auto flex w-fit flex-col items-center gap-2 py-4 text-center font-serif text-3xl font-bold text-shadow-[5px_2px_4px] text-shadow-black md:text-5xl"
+  >
+    <h1>Pirates of the Caribbean</h1>
+    <h2>Memory Game made by Alexandra F</h2>
 
-  <GameBoard />
+    <GameBoard />
 
-  <div id="footer">
-    <div id="info">
-      <h3>Attempts: {{ store.attempts }}</h3>
-      <h3>{{ store.gameStatus }}</h3>
+    <div
+      class="flex w-full flex-col items-center justify-around gap-2 text-2xl md:flex-row md:text-4xl"
+    >
+      <div>
+        <h3>Attempts: {{ store.attempts }}</h3>
+        <h3>{{ store.gameStatus }}</h3>
+      </div>
+      <button
+        class="bg-gold cursor-pointer rounded-xl px-3 py-1 text-black shadow-[0_2px_4px] inset-shadow-[0_4px] shadow-black inset-shadow-amber-300 transition duration-100 ease-out hover:translate-y-0.5"
+        @click="store.restartGame"
+      >
+        Restart Game
+      </button>
     </div>
-    <button @click="store.restartGame">Restart Game</button>
-  </div>
+  </main>
 </template>
-
-<style>
-@import url('https://fonts.cdnfonts.com/css/pieces-of-eight');
-
-:root {
-  background-blend-mode: multiply;
-  background-color: rgb(62, 47, 32);
-  background-image: url(/images/treasure.jpg);
-  background-size: cover;
-  color: rgb(194, 141, 35);
-  display: flex;
-  font-family: "Pieces of Eight", Georgia, "Times New Roman", Times, serif;
-  font-size: 1.6rem;
-  font-weight: 400;
-  justify-content: center;
-  letter-spacing: 2;
-  line-height: 0.2;
-  text-align: center;
-  text-shadow: 0.5vh 0.2vh 0.5vh black;
-}
-
-button {
-  background-color: rgb(194, 141, 35);
-  border-radius: 1.2vh;
-  border: none;
-  box-shadow:
-    0 0.3vh goldenrod inset,
-    0 0.3vh 0.5vh black;
-  font-family: "Pieces of Eight", Georgia, "Times New Roman", Times, serif;
-  font-size: 1rem;
-  font-weight: 500;
-  padding: 1%;
-}
-
-button:hover {
-  cursor: pointer;
-  transform: translateY(2%);
-  transition: transform 0.1s ease-out;
-}
-
-#footer {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-}
-</style>

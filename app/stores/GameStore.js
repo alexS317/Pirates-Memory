@@ -1,7 +1,7 @@
-import { defineStore } from "pinia";
-import pirateCards from "@/data/pirateCards.json";
+import { defineStore } from 'pinia';
+import pirateCards from '@/data/pirateCards.json';
 
-export const useGameStore = defineStore("GameStore", () => {
+export const useGameStore = defineStore('GameStore', () => {
   const cardList = ref([]);
   const cardItems = pirateCards;
   const playerSelection = ref([]);
@@ -25,7 +25,7 @@ export const useGameStore = defineStore("GameStore", () => {
 
   // Create 2x8 cards on the board, so there are always 2 cards with the same faceValue
   function initGame() {
-    cardItems.forEach((item) => {
+    cardItems.forEach(item => {
       cardList.value.push({
         position: null,
         faceValue: item,
@@ -34,7 +34,7 @@ export const useGameStore = defineStore("GameStore", () => {
         matched: false,
       });
     });
-    cardItems.forEach((item) => {
+    cardItems.forEach(item => {
       cardList.value.push({
         position: null,
         faceValue: item,
@@ -51,8 +51,8 @@ export const useGameStore = defineStore("GameStore", () => {
   function restartGame() {
     shuffleCards();
     getCardIndex();
-    cardList.value.forEach((card) => {
-      (card.visible = false), (card.matched = false), (attempts.value = 0);
+    cardList.value.forEach(card => {
+      ((card.visible = false), (card.matched = false), (attempts.value = 0));
     });
   }
 
@@ -69,8 +69,7 @@ export const useGameStore = defineStore("GameStore", () => {
         // Prevent player from selecting the same card twice
         if (
           playerSelection.value[0].position === emitData.position &&
-          playerSelection.value[0].selectedFaceValue ===
-            emitData.selectedFaceValue
+          playerSelection.value[0].selectedFaceValue === emitData.selectedFaceValue
         ) {
           return;
         } else playerSelection.value[1] = emitData;
@@ -81,7 +80,7 @@ export const useGameStore = defineStore("GameStore", () => {
   // Check if the 2 cards selected by the player match
   watch(
     playerSelection,
-    (currentValue) => {
+    currentValue => {
       if (currentValue.length === 2) {
         const cardOne = currentValue[0];
         const cardTwo = currentValue[1];
@@ -104,22 +103,20 @@ export const useGameStore = defineStore("GameStore", () => {
         playerSelection.value.length = 0;
       }
     },
-    { deep: true }
+    { deep: true },
   );
 
   // Count the remaining unmatched pairs
   const remainingPairs = computed(() => {
     // Check how many cards still have their matched property set to false
-    const remainingCards = cardList.value.filter(
-      (card) => card.matched === false
-    ).length;
+    const remainingCards = cardList.value.filter(card => card.matched === false).length;
 
     return remainingCards / 2;
   });
 
   // Display the remaining pairs, display win message if the player has matched all pairs
   const gameStatus = computed(() => {
-    if (remainingPairs.value === 0) return "Congrats matey, ye be the Winner!";
+    if (remainingPairs.value === 0) return 'Congrats matey, ye be the Winner!';
     else return `Remaining Pairs: ${remainingPairs.value}`;
   });
 
