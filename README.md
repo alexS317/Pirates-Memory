@@ -119,7 +119,7 @@ The main usage of the project is of course to be able to play it. If you create 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 
-[product-screenshot-1]: readme-screenshots\pirates-memory-1.webp
+[product-screenshot-1]: readme-screenshots/pirates-memory-1.webp
 
 <!-- Shields.io badges. You can a comprehensive list with many more badges at: https://github.com/inttter/md-badges -->
 
